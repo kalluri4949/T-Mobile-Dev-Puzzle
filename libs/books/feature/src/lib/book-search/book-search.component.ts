@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import {
   addToReadingList,
   clearSearch,
@@ -10,13 +10,14 @@ import {
 import { FormBuilder } from '@angular/forms';
 import { Book } from '@tmo/shared/models';
 import { debounceTime } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
 @Component({
   selector: 'tmo-book-search',
   templateUrl: './book-search.component.html',
   styleUrls: ['./book-search.component.scss']
 })
 export class BookSearchComponent implements OnInit {
-  books: ReadingListBook[];
+  books$: Observable<ReadingListBook[]>;
 
   searchForm = this.fb.group({
     term: ''
@@ -32,9 +33,13 @@ export class BookSearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.select(getAllBooks).subscribe(books => {
-      this.books = books;
-    });
+    this.searchForm
+      .get('term')
+      .valueChanges.pipe(debounceTime(500))
+      .subscribe(val => {
+        this.searchBooks();
+      });
+    this.books$ = this.store.pipe(select(getAllBooks));
   }
 
   formatDate(date: void | string) {
