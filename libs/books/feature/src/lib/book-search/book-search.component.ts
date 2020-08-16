@@ -5,7 +5,8 @@ import {
   clearSearch,
   getAllBooks,
   ReadingListBook,
-  searchBooks
+  searchBooks,
+  removeFromReadingList
 } from '@tmo/books/data-access';
 import { FormBuilder } from '@angular/forms';
 import { Book } from '@tmo/shared/models';
@@ -58,5 +59,10 @@ export class BookSearchComponent implements OnInit {
     } else {
       this.store.dispatch(clearSearch());
     }
+  }
+
+  removeFromReadingList(item) {
+    item = { bookId: item.id, ...item };
+    this.store.dispatch(removeFromReadingList({ item }));
   }
 }

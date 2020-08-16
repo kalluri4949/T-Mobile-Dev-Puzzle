@@ -41,3 +41,8 @@ export const confirmedRemoveFromReadingList = createAction(
   '[Reading List] Confirmed remove from list',
   props<{ item: ReadingListItem }>()
 );
+
+export const undoReadingList = createAction(
+  '[Reading List] undo list',
+  props<{ list: ReadingListItem[] }>()
+);
