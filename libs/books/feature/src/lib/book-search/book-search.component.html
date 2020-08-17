@@ -27,7 +27,7 @@
           <p [innerHTML]="b.description"></p>
           <div>
             <button mat-flat-button color="primary" (click)="addBookToReadingList(b)" [disabled]="b.isAdded"
-              *ngIf="!b.finished">
+              *ngIf="!b.finished" data-testing="want-read-book-item">
               Want to Read
             </button>
             <button mat-flat-button color="accent" *ngIf="b.finished">

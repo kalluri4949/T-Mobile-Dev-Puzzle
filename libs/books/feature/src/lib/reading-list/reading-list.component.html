@@ -8,7 +8,7 @@
       <div class="reading-list-item--details--author">
         {{ b.authors.join(',') }}
       </div>
-      <div class="reading-list-item--details--author" *ngIf="b.finished">
+      <div class="reading-list-item--details--author" *ngIf="b.finished" data-testing="finished-item">
         Finished: {{ b.finished }}
       </div>
       <div class="reading-list-item--details--author" *ngIf="b.finishedDate">
@@ -17,7 +17,8 @@
     </div>
     <div>
       <button *ngIf="!b.finished" mat-icon-button color="primary"
-        [attr.aria-label]="'Finshed ' + b.title + ' from reading list'" (click)="FinshedFromReadingList(b)">
+        [attr.aria-label]="'Finshed ' + b.title + ' from reading list'" (click)="FinshedFromReadingList(b)"
+        data-testing="finished-book-item">
         <mat-icon>check_circle</mat-icon>
       </button>
       <button mat-icon-button color="warn" [attr.aria-label]="'Remove ' + b.title + ' from reading list'"
